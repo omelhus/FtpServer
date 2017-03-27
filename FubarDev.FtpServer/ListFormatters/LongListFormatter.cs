@@ -26,9 +26,13 @@ namespace FubarDev.FtpServer.ListFormatters
 
         private static string BuildLine(IUnixFileSystemEntry entry, IUnixFileEntry fileEntry, string name)
         {
+            var lastWriteDate = entry.LastWriteTime ?? DateTimeOffset.MinValue;
+            var format = lastWriteDate.Year == DateTimeOffset.UtcNow.Year
+                ? "{0}{1}{2}{3} {4} {5} {6} {7} {8:MMM dd HH:mm} {9}"
+                : "{0}{1}{2}{3} {4} {5} {6} {7} {8:MMM dd yyyy} {9}";
             return string.Format(
                 CultureInfo.InvariantCulture,
-                "{0}{1}{2}{3} {4} {5} {6} {7} {8:MMM dd HH:mm} {9}",
+                format,
                 fileEntry == null ? "d" : "-",
                 BuildAccessMode(entry.Permissions.User),
                 BuildAccessMode(entry.Permissions.Group),
@@ -37,7 +41,7 @@ namespace FubarDev.FtpServer.ListFormatters
                 entry.Owner,
                 entry.Group,
                 fileEntry?.Size ?? 0,
-                entry.LastWriteTime ?? DateTimeOffset.MinValue,
+                lastWriteDate,
                 name);
         }
 
