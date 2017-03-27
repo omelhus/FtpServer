@@ -27,7 +27,7 @@ namespace FubarDev.FtpServer.CommandHandlers
         /// <inheritdoc/>
         public override Task<FtpResponse> Process(FtpCommand command, CancellationToken cancellationToken)
         {
-            return Task.FromResult(new FtpResponse(200, $"{Server.OperatingSystem} Type: {Connection.Data.TransferMode}"));
+            return Task.FromResult(new FtpResponse(200, $"{Server.OperatingSystem} Type: L8"));//{Connection.Data.TransferMode}"));
         }
     }
 }

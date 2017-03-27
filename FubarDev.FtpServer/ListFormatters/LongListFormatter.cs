@@ -5,6 +5,7 @@
 // <author>Mark Junker</author>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Globalization;
 
 using FubarDev.FtpServer.FileSystem;
@@ -27,7 +28,7 @@ namespace FubarDev.FtpServer.ListFormatters
         {
             return string.Format(
                 CultureInfo.InvariantCulture,
-                "{0}{1}{2}{3} {4} {5} {6} {7:D13} {8:MMM dd HH:mm} {9}",
+                "{0}{1}{2}{3} {4} {5} {6} {7} {8:MMM dd HH:mm} {9}",
                 fileEntry == null ? "d" : "-",
                 BuildAccessMode(entry.Permissions.User),
                 BuildAccessMode(entry.Permissions.Group),
@@ -36,7 +37,7 @@ namespace FubarDev.FtpServer.ListFormatters
                 entry.Owner,
                 entry.Group,
                 fileEntry?.Size ?? 0,
-                entry.LastWriteTime,
+                entry.LastWriteTime ?? DateTimeOffset.MinValue,
                 name);
         }
 
