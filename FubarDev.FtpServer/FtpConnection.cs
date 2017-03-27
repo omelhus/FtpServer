@@ -266,7 +266,11 @@ namespace FubarDev.FtpServer
             Log?.Info($"Connected from {RemoteAddress.ToString(true)}");
             using (var collector = new FtpCommandCollector(() => Encoding))
             {
-                await WriteAsync(new FtpResponse(220, "FTP Server Ready"), _cancellationTokenSource.Token);
+                var motd = Server.MessageOfTheDay ?? "FTP Server Ready";
+                foreach (var line in motd.Split(new []{Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    await WriteAsync(new FtpResponse(220, line), _cancellationTokenSource.Token);
+                }
 
                 var buffer = new byte[1024];
                 try

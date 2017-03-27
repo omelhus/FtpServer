@@ -117,6 +117,13 @@ namespace FubarDev.FtpServer
         /// </summary>
         [NotNull]
         public string OperatingSystem { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the returned message of the day when a new client connects. (default: FTP Server Ready)
+        /// </summary>
+        [CanBeNull]
+        public string MessageOfTheDay { get; set; }
+
 
         /// <summary>
         /// Gets the FTP server statistics
